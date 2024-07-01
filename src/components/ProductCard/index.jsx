@@ -45,8 +45,14 @@ export default function ProductCard({
               className="btn btn-outline-dark mt-auto"
               onClick={
                 isAddedToCart
-                  ? () => handleRemoveFromCart(data)
-                  : () => handleAddToCart(data)
+                  ? (e) => {
+                      e.preventDefault();
+                      handleRemoveFromCart(data);
+                    }
+                  : (e) => {
+                      e.preventDefault();
+                      handleAddToCart(data);
+                    }
               }
             >
               {isAddedToCart ? "Added to cart" : "Add to cart"}

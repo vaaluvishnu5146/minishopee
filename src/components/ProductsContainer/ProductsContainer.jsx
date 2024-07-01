@@ -7,8 +7,9 @@ export default function ProductsContainer({
   handleRemoveFromCart = () => {},
   cart = [],
 }) {
+  console.log("====>", cart);
   function findCartStatus(product = {}) {
-    return cart.some((d) => d.name == product.name);
+    return cart?.some((d) => d.name == product.name);
   }
   return (
     <section className="container" id="products-container">

@@ -1,4 +1,4 @@
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 export default function NavBar({ quantity = 0 }) {
@@ -22,18 +22,9 @@ export default function NavBar({ quantity = 0 }) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
             <li className="nav-item">
-              <a
-                className="nav-link active"
-                aria-current="page"
-                to="/home/MensTees"
-              >
+              <Link className="nav-link active" aria-current="page" to="/">
                 Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#!">
-                About
-              </a>
+              </Link>
             </li>
             <li className="nav-item dropdown">
               <a
@@ -48,30 +39,30 @@ export default function NavBar({ quantity = 0 }) {
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a
+                  <Link
                     className="nav-link active"
                     aria-current="page"
-                    to="/home/mens"
+                    to="/category/mens"
                   >
                     Mens Collections
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <a
+                  <Link
                     className="nav-link active"
                     aria-current="page"
-                    to="/home/womens"
+                    to="/category/womens"
                   >
-                    Womens Collections
-                  </a>
+                    womens Collections
+                  </Link>
                 </li>
               </ul>
             </li>
           </ul>
-          <a to="/cart">
+          <Link to="/cart">
             <button className="btn btn-outline-dark" type="submit">
               <i className="bi-cart-fill me-1"></i>
               Cart
@@ -79,7 +70,7 @@ export default function NavBar({ quantity = 0 }) {
                 {quantity}
               </span>
             </button>
-          </a>
+          </Link>
         </div>
       </div>
     </nav>
