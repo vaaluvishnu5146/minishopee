@@ -13,6 +13,7 @@ function App() {
 
   function handleAddToCart(data) {
     const cartCopy = [...cart];
+    data.quantity = 1;
     cartCopy.push(data);
     setCart(cartCopy);
   }
@@ -20,6 +21,18 @@ function App() {
   function handleRemoveFromCart(data) {
     let cartCopy = [...cart];
     cartCopy = cartCopy.filter((item) => item.id != data.id);
+    setCart(cartCopy);
+  }
+
+  function handleQuantityChange(id = 0, type = "increment") {
+    let cartCopy = [...cart];
+    let filteredData = cartCopy.find((item) => item.id === id);
+
+    if (type === "increment") {
+      filteredData.quantity += 1;
+    } else {
+      filteredData.quantity -= 1;
+    }
     setCart(cartCopy);
   }
 
@@ -49,7 +62,11 @@ function App() {
         />
         <Route
           Component={() => (
-            <Cart cart={cart} handleRemoveFromCart={handleRemoveFromCart} />
+            <Cart
+              cart={cart}
+              handleRemoveFromCart={handleRemoveFromCart}
+              handleQuantityChange={handleQuantityChange}
+            />
           )}
           path="/cart"
         />
