@@ -1,45 +1,110 @@
-import { useEffect, useState } from "react";
-import Billboard from "./components/Billboard";
-import Header from "./components/Header/index";
-import ProductsContainer from "./components/ProductsContainer/ProductsContainer";
+import { useState, useContext } from "react";
+import { TodoContext } from "./context/TodoContext";
 
 function App() {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
-  useEffect(() => {
-    fetch("http://localhost:5173/products.json")
-      .then((response) => response.json())
-      .then((result) => {
-        if (result && result.data.length > 0) {
-          setProducts(result.data);
-        }
-      });
-  }, []);
+  const {
+    todos = [],
+    handleSaveNewTodo = () => {},
+    handleUpdateTodo = () => {},
+    handleDeleteTodo = () => {},
+    handleStatusUpdate = () => {},
+  } = useContext(TodoContext);
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    status: "not-completed",
+  });
+  const [isUpdateMode, setUpdateMode] = useState(false);
 
-  function handleAddToCart(data) {
-    const cartCopy = [...cart];
-    cartCopy.push(data);
-    setCart(cartCopy);
+  function emptyForm() {
+    setFormData({
+      ...formData,
+      title: "",
+      description: "",
+    });
   }
 
-  function handleRemoveFromCart(data) {
-    let cartCopy = [...cart];
-    cartCopy = cartCopy.filter((item) => item.id != data.id);
-    setCart(cartCopy);
+  function handleInputChange(e) {
+    const formDataCopy = {
+      ...formData,
+      [e.target.id]: e.target.value,
+    };
+    setFormData(formDataCopy);
+  }
+
+  function handleEditClick(id = 0) {
+    setUpdateMode(true);
+    const todosCopy = [...todos];
+    setFormData(todosCopy.find((todo) => todo.id === id));
   }
 
   return (
     <>
-      <Header quantity={cart.length} />
-      <Billboard />
-      <ProductsContainer
-        products={products}
-        handleAddToCart={handleAddToCart}
-        handleRemoveFromCart={handleRemoveFromCart}
-        cart={cart}
-      />
+      <h1>Todo Application</h1>
+      <div>
+        <input
+          id="title"
+          value={formData.title}
+          placeholder="Task Name"
+          onChange={handleInputChange}
+        />
+        <input
+          id="description"
+          value={formData.description}
+          placeholder="Task Description"
+          onChange={handleInputChange}
+        />
+        {!isUpdateMode ? (
+          <button
+            onClick={() => {
+              handleSaveNewTodo(formData);
+              emptyForm();
+            }}
+          >
+            Save
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              handleUpdateTodo(formData);
+              setUpdateMode(false);
+              emptyForm();
+            }}
+          >
+            Update
+          </button>
+        )}
+      </div>
+      <div>
+        {todos.map((todo, index) => (
+          <div key={`${todo.title}-${index}`}>
+            <h1>{todo.title}</h1>
+            <p>{todo.description}</p>
+            <p>{todo.status}</p>
+            <div>
+              <label htmlFor="status">Status</label>
+              <input
+                id="status"
+                type="checkbox"
+                onChange={(e) => handleStatusUpdate(todo.id, e.target.checked)}
+              />
+            </div>
+            <div>
+              <button onClick={() => handleEditClick(todo.id)}>Edit</button>
+              <button onClick={() => handleDeleteTodo(todo.id)}>Delete</button>
+            </div>
+          </div>
+        ))}
+      </div>
     </>
   );
 }
 
 export default App;
+
+// <>
+//   <h1>{appContextData.heading}</h1>
+//   <p>{appContextData.description}</p>
+//   <One />
+//   <Two />
+// </>;
