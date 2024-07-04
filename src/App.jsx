@@ -1,45 +1,50 @@
-import { useEffect, useState } from "react";
-import Billboard from "./components/Billboard";
-import Header from "./components/Header/index";
-import ProductsContainer from "./components/ProductsContainer/ProductsContainer";
+import { useEffect, useReducer, useRef } from "react";
+import LearnUseReducer from "./LearnUseReducer";
 
 function App() {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
-  useEffect(() => {
-    fetch("http://localhost:5173/products.json")
-      .then((response) => response.json())
-      .then((result) => {
-        if (result && result.data.length > 0) {
-          setProducts(result.data);
-        }
-      });
-  }, []);
+  // const headingRef = useRef(null);
+  // const nameRef = useRef(null);
+  // useLayoutEffect(() => {
+  //   const heading = document.getElementById("heading");
+  //   heading.style.color = "red";
+  // }, []);
 
-  function handleAddToCart(data) {
-    const cartCopy = [...cart];
-    cartCopy.push(data);
-    setCart(cartCopy);
-  }
-
-  function handleRemoveFromCart(data) {
-    let cartCopy = [...cart];
-    cartCopy = cartCopy.filter((item) => item.id != data.id);
-    setCart(cartCopy);
-  }
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     headingRef.current.style.color = "green";
+  //   }, 5000);
+  // }, []);
 
   return (
     <>
-      <Header quantity={cart.length} />
-      <Billboard />
-      <ProductsContainer
-        products={products}
-        handleAddToCart={handleAddToCart}
-        handleRemoveFromCart={handleRemoveFromCart}
-        cart={cart}
-      />
+      <LearnUseReducer />
     </>
   );
 }
 
 export default App;
+// <h1 id="heading" ref={headingRef}>
+//         App
+//       </h1>
+//       <div>
+//         <h2>Using Dom</h2>
+//         <input id="nameInput" placeholder="Enter you name" />
+//         <button
+//           onClick={() => {
+//             console.log(document.getElementById("nameInput").value);
+//           }}
+//         >
+//           Save
+//         </button>
+//       </div>
+//       <div>
+//         <h2>Using useRef</h2>
+//         <input placeholder="Enter you name" ref={nameRef} />
+//         <button
+//           onClick={() => {
+//             console.log(nameRef.current.value);
+//           }}
+//         >
+//           Save
+//         </button>
+//       </div>
