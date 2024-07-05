@@ -5,7 +5,7 @@ export default function CartCard({
   handleQuantityChange = () => {},
 }) {
   return (
-    <div className="col-md-3 mb-5">
+    <div className="col-md-4 mb-5">
       <div className="card h-100">
         <div
           className="badge bg-dark text-white position-absolute"
