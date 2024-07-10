@@ -1,5 +1,11 @@
+import Forms from "./functions/Forms";
+
 function App() {
-  return <>Application</>;
+  return (
+    <>
+      <Forms />
+    </>
+  );
 }
 
 export default App;
