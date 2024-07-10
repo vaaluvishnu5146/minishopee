@@ -1,7 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Counter() {
   const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log("Hey");
+  }, []);
+
+  useEffect(() => {
+    console.log("Count changed", count);
+  }, [count]);
+
   return (
     <div className="container">
       <h1>Counter Application</h1>

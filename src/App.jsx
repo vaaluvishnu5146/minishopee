@@ -1,9 +1,9 @@
-import Forms from "./functions/Forms";
+import CounterWithReducer from "./functions/CounterWithReducer";
 
 function App() {
   return (
     <>
-      <Forms />
+      <CounterWithReducer />{" "}
     </>
   );
 }
